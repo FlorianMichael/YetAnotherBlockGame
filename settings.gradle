@@ -5,4 +5,12 @@ pluginManagement {
     }
 }
 
-rootProject.name = "BaseProject"
+rootProject.name = "YetAnotherBlockGame"
+
+setupSubproject("core")
+setupSubproject("api")
+
+void setupSubproject(String name) {
+    include("yabg-" + name)
+    project(":yabg-" + name).projectDir = file(name)
+}

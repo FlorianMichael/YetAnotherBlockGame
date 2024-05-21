@@ -19,10 +19,6 @@ repositories {
 }
 
 dependencies {
-    // Add for unit testing
-    // testImplementation platform("org.junit:junit-bom:5.9.3")
-    // testImplementation "org.junit.jupiter:junit-jupiter"
-
     // Add your dependencies here
     // Example: implementation "org.apache.commons:commons-lang3:3.14.0"
     // You can use library "org.apache.commons:commons-lang3:3.14.0" to include the dependency in the jar file as well
@@ -53,12 +49,6 @@ jar {
         exclude "META-INF/*.RSA", "META-INF/*.SF", "META-INF/*.DSA"
     }
 
-    manifest {
-        attributes(
-                "Main-Class": "de.florianmichael.baseproject.Example"
-        )
-    }
-
     // Rename the project's license file to LICENSE_<project_name> to avoid conflicts
     from("LICENSE") {
         rename {
@@ -66,15 +56,6 @@ jar {
         }
     }
 }
-
-// Add for unit testing
-//test {
-//    useJUnitPlatform()
-//    testLogging {
-//        events "passed", "skipped", "failed"
-//    }
-//    maxParallelForks Runtime.runtime.availableProcessors()
-//}
 
 publishing {
     repositories {
@@ -109,12 +90,12 @@ publishing {
 
             pom {
                 name = artifactId
-                description = "Gradle template project with jar signing, publishing to maven central and GitHub workflows."
-                url = "https://github.com/FlorianMichael/BaseProject"
+                description = "Advanced OneBlock SkyBlock implementation for Paper (and Spigot)."
+                url = "https://github.com/FlorianMichael/YetAnotherBlockGame"
                 licenses {
                     license {
                         name = "Apache-2.0 license"
-                        url = "https://github.com/FlorianMichael/BaseProject/blob/main/LICENSE"
+                        url = "https://github.com/FlorianMichael/YetAnotherBlockGame/blob/main/LICENSE"
                     }
                 }
                 developers {
@@ -125,9 +106,9 @@ publishing {
                     }
                 }
                 scm {
-                    connection = "scm:git:git://github.com/FlorianMichael/BaseProject.git"
-                    developerConnection = "scm:git:ssh://github.com/FlorianMichael/BaseProject.git"
-                    url = "github.com/FlorianMichael/BaseProject"
+                    connection = "scm:git:git://github.com/FlorianMichael/YetAnotherBlockGame.git"
+                    developerConnection = "scm:git:ssh://github.com/FlorianMichael/YetAnotherBlockGame.git"
+                    url = "github.com/FlorianMichael/YetAnotherBlockGame"
                 }
             }
         }
