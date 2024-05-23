@@ -1,0 +1,19 @@
+# Thanks for using YetAnotherBlockGame
+# Ensure you look through all these options
+# If you need help:
+# Discord - https://discord.gg/BwWhCHUKDf
+#
+#----------------------------------------------------------#
+#                      MAIN OPTIONS                        #
+#----------------------------------------------------------#
+#
+# The prefix for all messages
+chat-format: "&7[&6YABG&7] "
+#
+#----------------------------------------------------------#
+#                      CHAT MESSAGE                        #
+#----------------------------------------------------------#
+#
+spawn-message: "&aYou have been teleported to spawn"
+spawn-not-set-message: "&cSpawn has not been set"
+player-only-command: "&cOnly players can use this command!"

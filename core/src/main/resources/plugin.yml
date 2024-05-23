@@ -1,0 +1,17 @@
+name: YetAnotherBlockGame
+main: de.florianmichael.yabg.BukkitPlugin
+author: FlorianMichael/EnZaXD
+version: ${version}
+description: Advanced OneBlock SkyBlock implementation for Paper (and Spigot).
+api-version: 1.13
+folia-supported: true
+commands:
+  spawn:
+    description: Teleport to the spawn location
+    usage: /<command>
+  configure:
+    description: Configure the plugin
+    usage: /<command>
+  islands:
+    description: List all islands
+    usage: /<command>
