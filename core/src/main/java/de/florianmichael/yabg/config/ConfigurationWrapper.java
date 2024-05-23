@@ -31,10 +31,11 @@ public final class ConfigurationWrapper extends WrappedConfig {
     private final PositionsConfig positions;
 
     public String chatFormat;
+    public String worldName;
 
     public String spawnMessage;
     public String spawnNotSetMessage;
-    public String playerOnlyCommand;
+    public String playerOnlyCommandMessage;
 
     public ConfigurationWrapper(final FileConfiguration config) {
         super(config);
@@ -43,23 +44,27 @@ public final class ConfigurationWrapper extends WrappedConfig {
 
     @Override
     public void read() {
+        // Main options
         chatFormat = colorString("chat-format");
+        worldName = get("world.name", String.class);
 
-        spawnMessage = message("spawn-message");
-        spawnNotSetMessage = message("spawn-not-set-message");
-        playerOnlyCommand = message("player-only-command");
+        // Messages
+        spawnMessage = message("spawn-teleport");
+        spawnNotSetMessage = message("spawn-not-set");
+        playerOnlyCommandMessage = message("player-only-command");
 
+        // Internal config files
         final File folder = BukkitPlugin.instance().getDataFolder();
         this.positions.load(folder, "positions.yml");
     }
 
     public String message(final String key) {
-        return chatFormat + colorString(key);
+        return chatFormat + colorString("messages." + key);
     }
 
     @Override
     public void write() {
-        throw new IllegalStateException("Not implemented");
+        this.positions.save();
     }
 
     public PositionsConfig positions() {

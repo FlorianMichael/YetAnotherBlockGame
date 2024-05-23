@@ -17,8 +17,12 @@
 
 package de.florianmichael.yabg;
 
+import de.florianmichael.yabg.command.SetupCommand;
 import de.florianmichael.yabg.command.SpawnCommand;
 import de.florianmichael.yabg.config.ConfigurationWrapper;
+import de.florianmichael.yabg.generator.CustomWorldFactory;
+import org.bukkit.World;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -26,6 +30,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class BukkitPlugin extends JavaPlugin {
 
     private ConfigurationWrapper config;
+    private World world;
 
     @Override
     public void onEnable() {
@@ -34,10 +39,26 @@ public final class BukkitPlugin extends JavaPlugin {
         config.read(); // Load done by bukkit
 
         registerCommand("spawn", new SpawnCommand(config));
+        registerCommand("setup", new SetupCommand(config));
+
+        if (getServer().getWorld(config.worldName) != null) {
+            world = getServer().getWorld(config.worldName);
+        } else {
+            getLogger().info("Creating OneBlock world...");
+            world = CustomWorldFactory.createEmptyWorld(config.worldName);
+        }
+    }
+
+    @Override
+    public void onDisable() {
+        config.write();
     }
 
     private void registerCommand(final String name, final TabExecutor implementation) {
-        final var command = getCommand(name);
+        final PluginCommand command = getCommand(name);
+        if (command == null) {
+            throw new IllegalArgumentException("Add command to plugin.yml: " + name);
+        }
         command.setExecutor(implementation);
         command.setTabCompleter(implementation);
     }
@@ -48,6 +69,10 @@ public final class BukkitPlugin extends JavaPlugin {
 
     public ConfigurationWrapper config() {
         return config;
+    }
+
+    public World world() {
+        return world;
     }
 
 }

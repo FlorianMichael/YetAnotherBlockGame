@@ -8,10 +8,7 @@ folia-supported: true
 commands:
   spawn:
     description: Teleport to the spawn location
-    usage: /<command>
-  configure:
+    usage: /spawn
+  setup:
     description: Configure the plugin
-    usage: /<command>
-  islands:
-    description: List all islands
-    usage: /<command>
+    usage: /setup <action>

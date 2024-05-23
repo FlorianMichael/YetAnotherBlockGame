@@ -10,10 +10,15 @@
 # The prefix for all messages
 chat-format: "&7[&6YABG&7] "
 #
+# The world used to generate the islands, if it doesn't exist we will create it
+world:
+  name: "yabg_world"
+#
 #----------------------------------------------------------#
 #                      CHAT MESSAGE                        #
 #----------------------------------------------------------#
 #
-spawn-message: "&aYou have been teleported to spawn"
-spawn-not-set-message: "&cSpawn has not been set"
-player-only-command: "&cOnly players can use this command!"
+messages:
+  spawn-teleport: "&aYou have been teleported to spawn"
+  spawn-not-set: "&cSpawn has not been set"
+  player-only-command: "&cOnly players can use this command!"

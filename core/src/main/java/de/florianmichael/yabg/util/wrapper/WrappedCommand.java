@@ -53,9 +53,22 @@ public interface WrappedCommand extends TabExecutor {
         if (sender instanceof Player) {
             return (Player) sender;
         } else {
-            sender.sendMessage(BukkitPlugin.instance().config().playerOnlyCommand);
+            sender.sendMessage(BukkitPlugin.instance().config().playerOnlyCommandMessage);
             return null;
         }
+    }
+
+    default boolean hasPermission(CommandSender sender, String permission) {
+        if (sender.hasPermission(permission)) {
+            return true;
+        } else {
+            sender.sendMessage(prefixed("§cYou don't have permission to do that!"));
+            return false;
+        }
+    }
+
+    default String prefixed(final String message) {
+        return BukkitPlugin.instance().config().chatFormat + message;
     }
 
 }
