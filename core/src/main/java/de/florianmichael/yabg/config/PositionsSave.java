@@ -20,7 +20,7 @@ package de.florianmichael.yabg.config;
 import de.florianmichael.yabg.util.wrapper.WrappedConfig;
 import org.bukkit.Location;
 
-public final class PositionsConfig extends WrappedConfig {
+public final class PositionsSave extends WrappedConfig {
 
     public Location spawnLocation;
 

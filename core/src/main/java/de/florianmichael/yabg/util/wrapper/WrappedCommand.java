@@ -62,7 +62,7 @@ public interface WrappedCommand extends TabExecutor {
         if (sender.hasPermission(permission)) {
             return true;
         } else {
-            sender.sendMessage(prefixed("§cYou don't have permission to do that!"));
+            sender.sendMessage(BukkitPlugin.instance().config().missingPermissionMessage);
             return false;
         }
     }

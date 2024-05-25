@@ -17,29 +17,38 @@
 
 package de.florianmichael.yabg;
 
-import de.florianmichael.yabg.command.SetupCommand;
+import de.florianmichael.yabg.command.IslandCommand;
+import de.florianmichael.yabg.command.SetSpawnCommand;
 import de.florianmichael.yabg.command.SpawnCommand;
 import de.florianmichael.yabg.config.ConfigurationWrapper;
 import de.florianmichael.yabg.generator.CustomWorldFactory;
+import de.florianmichael.yabg.island.IslandTracker;
+import de.florianmichael.yabg.listener.BlockBreakListener;
 import org.bukkit.World;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.command.TabExecutor;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-// TODO move out into a separate class and keep this only for bootstrapping
+// TODO move out into a separate class and keep this only for bootstrapping (expose interfaces to api module)
 public final class BukkitPlugin extends JavaPlugin {
 
+    private IslandTracker islandTracker;
     private ConfigurationWrapper config;
+
     private World world;
 
     @Override
     public void onEnable() {
+        islandTracker = new IslandTracker();
+
         saveDefaultConfig();
-        config = new ConfigurationWrapper(getConfig());
+        config = new ConfigurationWrapper(getConfig(), islandTracker);
         config.read(); // Load done by bukkit
 
         registerCommand("spawn", new SpawnCommand(config));
-        registerCommand("setup", new SetupCommand(config));
+        registerCommand("setspawn", new SetSpawnCommand(config));
+        registerCommand("island", new IslandCommand(config, islandTracker));
 
         if (getServer().getWorld(config.worldName) != null) {
             world = getServer().getWorld(config.worldName);
@@ -47,6 +56,8 @@ public final class BukkitPlugin extends JavaPlugin {
             getLogger().info("Creating OneBlock world...");
             world = CustomWorldFactory.createEmptyWorld(config.worldName);
         }
+
+        registerEvent(new BlockBreakListener());
     }
 
     @Override
@@ -63,8 +74,16 @@ public final class BukkitPlugin extends JavaPlugin {
         command.setTabCompleter(implementation);
     }
 
+    private void registerEvent(final Listener listener) {
+        getServer().getPluginManager().registerEvents(listener, this);
+    }
+
     public static BukkitPlugin instance() {
         return JavaPlugin.getPlugin(BukkitPlugin.class);
+    }
+
+    public IslandTracker islandTracker() {
+        return islandTracker;
     }
 
     public ConfigurationWrapper config() {

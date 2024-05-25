@@ -20,11 +20,14 @@ package de.florianmichael.yabg.util.wrapper;
 import com.google.common.base.Preconditions;
 import de.florianmichael.yabg.BukkitPlugin;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 
 public abstract class WrappedConfig {
@@ -57,6 +60,14 @@ public abstract class WrappedConfig {
         } else {
             read();
         }
+    }
+
+    public void createGroup(final String name, final Consumer<ConfigurationSection> consumer) {
+        consumer.accept(config.createSection(name));
+    }
+
+    public List<ConfigurationSection> groups() {
+        return config.getKeys(false).stream().map(config::getConfigurationSection).toList();
     }
 
     public void set(final String key, final Object value) {

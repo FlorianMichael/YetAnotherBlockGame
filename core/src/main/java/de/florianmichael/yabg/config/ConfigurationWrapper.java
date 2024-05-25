@@ -18,6 +18,7 @@
 package de.florianmichael.yabg.config;
 
 import de.florianmichael.yabg.BukkitPlugin;
+import de.florianmichael.yabg.island.IslandTracker;
 import de.florianmichael.yabg.util.wrapper.WrappedConfig;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -28,34 +29,43 @@ import java.io.File;
  */
 public final class ConfigurationWrapper extends WrappedConfig {
 
-    private final PositionsConfig positions;
+    private final PositionsSave positions;
+    private final IslandsSave islands;
 
     public String chatFormat;
+
     public String worldName;
+    public int islandSize;
 
     public String spawnMessage;
     public String spawnNotSetMessage;
     public String playerOnlyCommandMessage;
+    public String missingPermissionMessage;
 
-    public ConfigurationWrapper(final FileConfiguration config) {
+    public ConfigurationWrapper(final FileConfiguration config, final IslandTracker tracker) {
         super(config);
-        this.positions = new PositionsConfig();
+        this.positions = new PositionsSave();
+        this.islands = new IslandsSave(tracker);
     }
 
     @Override
     public void read() {
         // Main options
         chatFormat = colorString("chat-format");
+
         worldName = get("world.name", String.class);
+        islandSize = get("world.island-size", Integer.class);
 
         // Messages
         spawnMessage = message("spawn-teleport");
         spawnNotSetMessage = message("spawn-not-set");
         playerOnlyCommandMessage = message("player-only-command");
+        missingPermissionMessage = message("missing-permission");
 
-        // Internal config files
+        // Internal save files
         final File folder = BukkitPlugin.instance().getDataFolder();
         this.positions.load(folder, "positions.yml");
+        this.islands.load(folder, "islands.yml");
     }
 
     public String message(final String key) {
@@ -65,9 +75,10 @@ public final class ConfigurationWrapper extends WrappedConfig {
     @Override
     public void write() {
         this.positions.save();
+        this.islands.save();
     }
 
-    public PositionsConfig positions() {
+    public PositionsSave positions() {
         return positions;
     }
 

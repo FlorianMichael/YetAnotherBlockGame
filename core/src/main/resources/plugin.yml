@@ -9,6 +9,9 @@ commands:
   spawn:
     description: Teleport to the spawn location
     usage: /spawn
-  setup:
-    description: Configure the plugin
-    usage: /setup <action>
+  setspawn:
+    description: Set the spawn location
+    usage: /setspawn
+  island:
+    description: Manage your island or visit another player's island
+    usage: /island
