@@ -17,44 +17,32 @@
 
 package de.florianmichael.yabg.listener;
 
-import de.florianmichael.yabg.island.IslandTracker;
-import de.florianmichael.yabg.island.YABGIsland;
+import de.florianmichael.yabg.BukkitPlugin;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
-public final class BlockBreakListener implements Listener {
+public final class BlockBreakListener extends IslandListenerBase {
 
-    private final IslandTracker tracker;
-    private final World world;
-
-    public BlockBreakListener(final IslandTracker tracker, final World world) {
-        this.tracker = tracker;
-        this.world = world;
+    public BlockBreakListener(BukkitPlugin instance) {
+        super(instance);
     }
 
     @EventHandler
     public void onBlockBreak(final BlockBreakEvent e) {
         final Player player = e.getPlayer();
-        if (player.getWorld() != world) {
-            return;
-        }
-        final YABGIsland island = tracker.byOwner(player.getUniqueId());
-        if (island == null) {
-            return;
-        }
-        if (e.getBlock().getLocation().equals(island.getBlockLocation())) {
-            e.setCancelled(true);
-            final Item entity = (Item) player.getWorld().spawnEntity(player.getLocation(), EntityType.ITEM);
-            // TODO create models to calculate a good item to give
-            entity.setItemStack(new ItemStack(Material.DIAMOND_BLOCK, 64));
-        }
+        call(player, island -> {
+            if (e.getBlock().getLocation().equals(island.getBlockLocation())) {
+                e.setCancelled(true);
+                final Item entity = (Item) player.getWorld().spawnEntity(player.getLocation(), EntityType.ITEM);
+                // TODO create models to calculate a good item to give
+                entity.setItemStack(new ItemStack(Material.DIAMOND_BLOCK, 64));
+            }
+        });
     }
 
 }
