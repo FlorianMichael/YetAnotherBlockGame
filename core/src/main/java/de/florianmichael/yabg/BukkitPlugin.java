@@ -25,6 +25,7 @@ import de.florianmichael.yabg.config.ConfigurationWrapper;
 import de.florianmichael.yabg.generator.CustomWorldFactory;
 import de.florianmichael.yabg.island.IslandTracker;
 import de.florianmichael.yabg.listener.BlockBreakListener;
+import de.florianmichael.yabg.listener.PlayerDeathListener;
 import de.florianmichael.yabg.listener.PlayerJoinListener;
 import de.florianmichael.yabg.listener.PlayerMoveListener;
 import org.bukkit.World;
@@ -65,6 +66,7 @@ public final class BukkitPlugin extends JavaPlugin {
         registerEvent(new PlayerJoinListener(config));
         registerEvent(new BlockBreakListener(this));
         registerEvent(new PlayerMoveListener(this));
+        registerEvent(new PlayerDeathListener(this));
     }
 
     @Override
