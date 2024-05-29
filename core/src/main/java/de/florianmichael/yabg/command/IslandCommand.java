@@ -45,17 +45,29 @@ public final class IslandCommand implements WrappedCommand {
                     return;
                 }
             }
-            final YABGIsland island = tracker.create(player.getUniqueId(), name);
+            YABGIsland island = tracker.byOwner(player.getUniqueId());
+            if (island != null) {
+                player.sendMessage(prefixed("§cYou already have an island!"));
+                return;
+            }
+            island = tracker.create(player.getUniqueId(), name);
             player.sendMessage(prefixed("§aIsland created!"));
             island.teleport(player);
         });
         subCommands.put("delete", (player, args) -> {
         });
-        subCommands.put("home", (player, args) -> {
+        subCommands.put("visit", (player, args) -> {
         });
         subCommands.put("invite", (player, args) -> {
         });
         subCommands.put("join", (player, args) -> {
+            final YABGIsland island = tracker.byOwner(player.getUniqueId());
+            if (island == null) {
+                player.sendMessage(prefixed("§cYou don't have an island!"));
+                return;
+            }
+            island.teleport(player);
+            player.sendMessage(prefixed("§aTeleported to your island!"));
         });
         subCommands.put("kick", (player, args) -> {
         });

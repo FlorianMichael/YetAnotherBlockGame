@@ -15,3 +15,6 @@ commands:
   island:
     description: Manage your island or visit another player's island
     usage: /island
+  debug:
+    description: Debug command
+    usage: /debug

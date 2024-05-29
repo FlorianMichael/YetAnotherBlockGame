@@ -18,6 +18,7 @@
 package de.florianmichael.yabg.island;
 
 import de.florianmichael.yabg.BukkitPlugin;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -55,13 +56,20 @@ public final class YABGIsland {
         final int size = BukkitPlugin.instance().config().islandSize;
         final World world = BukkitPlugin.instance().world();
 
-        world.setBlockData(middleX(size), middleZ(size), 100 /* Just some arbitrary value */, Material.DIRT.createBlockData());
+        world.setBlockData(middleX(size), 100 /* Just some arbitrary value */, middleZ(size), Material.DIRT.createBlockData());
     }
 
     public void teleport(final Player player) {
         final int size = BukkitPlugin.instance().config().islandSize;
+        final World world = BukkitPlugin.instance().world();
 
-        player.teleport(player.getWorld().getHighestBlockAt(middleX(size), middleZ(size)).getLocation());
+        player.teleport(world.getHighestBlockAt(middleX(size), middleZ(size)).getLocation());
+    }
+
+    public Location getBlockLocation() {
+        final int size = BukkitPlugin.instance().config().islandSize;
+
+        return new Location(BukkitPlugin.instance().world(), middleX(size), 100, middleZ(size));
     }
 
     public int middleX(final int size) {

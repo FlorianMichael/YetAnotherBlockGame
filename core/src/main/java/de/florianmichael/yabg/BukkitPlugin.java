@@ -17,6 +17,7 @@
 
 package de.florianmichael.yabg;
 
+import de.florianmichael.yabg.command.DebugCommand;
 import de.florianmichael.yabg.command.IslandCommand;
 import de.florianmichael.yabg.command.SetSpawnCommand;
 import de.florianmichael.yabg.command.SpawnCommand;
@@ -50,6 +51,8 @@ public final class BukkitPlugin extends JavaPlugin {
         registerCommand("setspawn", new SetSpawnCommand(config));
         registerCommand("island", new IslandCommand(config, islandTracker));
 
+        registerCommand("debug", new DebugCommand());
+
         if (getServer().getWorld(config.worldName) != null) {
             world = getServer().getWorld(config.worldName);
         } else {
@@ -57,7 +60,7 @@ public final class BukkitPlugin extends JavaPlugin {
             world = CustomWorldFactory.createEmptyWorld(config.worldName);
         }
 
-        registerEvent(new BlockBreakListener());
+        registerEvent(new BlockBreakListener(islandTracker, world));
     }
 
     @Override
