@@ -2,7 +2,7 @@ name: YetAnotherBlockGame
 main: de.florianmichael.yabg.BukkitPlugin
 author: FlorianMichael/EnZaXD
 version: ${version}
-description: Advanced OneBlock SkyBlock implementation for Paper (and Spigot).
+description: Minimalistic OneBlock SkyBlock implementation for Paper (and Spigot).
 api-version: 1.13
 folia-supported: true
 commands:

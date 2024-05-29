@@ -102,7 +102,7 @@ publishing {
 
             pom {
                 name = artifactId
-                description = "Advanced OneBlock SkyBlock implementation for Paper (and Spigot)."
+                description = "Minimalistic OneBlock SkyBlock implementation for Paper (and Spigot)."
                 url = "https://github.com/FlorianMichael/YetAnotherBlockGame"
                 licenses {
                     license {
