@@ -29,7 +29,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class BlockBreakListener implements Listener {
+public final class BlockBreakListener implements Listener {
 
     private final IslandTracker tracker;
     private final World world;

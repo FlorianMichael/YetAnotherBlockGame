@@ -24,7 +24,7 @@ import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 
 // Test-only command, not to be loaded later on
-public class DebugCommand implements WrappedCommand {
+public final class DebugCommand implements WrappedCommand {
 
     @Override
     public void execute(CommandSender sender, String[] args) {

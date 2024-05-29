@@ -15,30 +15,27 @@
  * limitations under the License.
  */
 
-package de.florianmichael.yabg.util;
+package de.florianmichael.yabg.listener;
 
-// Thank you Mojang, very cool
-public final class StringUtil {
+import de.florianmichael.yabg.config.ConfigurationWrapper;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 
-    public static boolean isValidChar(char c) {
-        return c != 167 && c >= ' ' && c != 127;
+public final class PlayerJoinListener implements Listener {
+
+    private final ConfigurationWrapper config;
+
+    public PlayerJoinListener(final ConfigurationWrapper config) {
+        this.config = config;
     }
 
-    public static String stripInvalidChars(String string) {
-        return stripInvalidChars(string, false);
-    }
-
-    public static String stripInvalidChars(String string, boolean allowLinebreak) {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for(char c : string.toCharArray()) {
-            if (isValidChar(c)) {
-                stringBuilder.append(c);
-            } else if (allowLinebreak && c == '\n') {
-                stringBuilder.append(c);
-            }
+    @EventHandler
+    public void onPlayerJoin(final PlayerJoinEvent e) {
+        if (config.positions().spawnLocation != null) {
+            e.getPlayer().teleport(config.positions().spawnLocation);
+            e.getPlayer().sendMessage("Welcome to YetAnotherBlockGame!");
         }
-        return stringBuilder.toString();
     }
 
 }
