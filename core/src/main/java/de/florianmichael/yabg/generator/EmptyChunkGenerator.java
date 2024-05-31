@@ -45,4 +45,5 @@ public final class EmptyChunkGenerator extends ChunkGenerator {
     public List<BlockPopulator> getDefaultPopulators(final World world) {
         return Collections.emptyList();
     }
+
 }
