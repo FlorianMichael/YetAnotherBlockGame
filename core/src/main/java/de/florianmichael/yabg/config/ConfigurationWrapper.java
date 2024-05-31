@@ -20,6 +20,7 @@ package de.florianmichael.yabg.config;
 import de.florianmichael.yabg.BukkitPlugin;
 import de.florianmichael.yabg.island.IslandTracker;
 import de.florianmichael.yabg.util.wrapper.WrappedConfig;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
@@ -33,14 +34,16 @@ public final class ConfigurationWrapper extends WrappedConfig {
     private final IslandsSave islands;
 
     public String chatFormat;
-
     public String worldName;
-    public int islandSize;
 
     public String spawnMessage;
     public String spawnNotSetMessage;
     public String playerOnlyCommandMessage;
     public String missingPermissionMessage;
+
+    public int islandSize;
+    public Material islandBlock;
+    public int spawnY;
 
     public ConfigurationWrapper(final FileConfiguration config, final IslandTracker tracker) {
         super(config);
@@ -52,15 +55,17 @@ public final class ConfigurationWrapper extends WrappedConfig {
     public void read() {
         // Main options
         chatFormat = colorString("chat-format");
-
-        worldName = get("world.name", String.class);
-        islandSize = get("world.island-size", Integer.class);
+        worldName = get("world-name", String.class);
 
         // Messages
         spawnMessage = message("spawn-teleport");
         spawnNotSetMessage = message("spawn-not-set");
         playerOnlyCommandMessage = message("player-only-command");
         missingPermissionMessage = message("missing-permission");
+
+        islandSize = get("island.size", Integer.class);
+        islandBlock = Material.valueOf(get("island.block", String.class));
+        spawnY = get("island.spawn-y", Integer.class);
 
         // Internal save files
         final File folder = BukkitPlugin.instance().getDataFolder();

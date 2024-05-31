@@ -32,8 +32,12 @@ public final class DebugCommand implements WrappedCommand {
 //
 //        System.out.println(getPlayer(sender).getWorld().getName());
 
-        final Location loc = getPlayer(sender).getLocation();
-        getPlayer(sender).getWorld().setBlockData(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ() + 2, Material.DIRT.createBlockData());
+
+        final double maxWorldSize = BukkitPlugin.instance().world().getWorldBorder().getMaxSize();
+        System.out.println(maxWorldSize);
+
+//        final Location loc = getPlayer(sender).getLocation();
+//        getPlayer(sender).getWorld().setBlockData(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ() + 2, Material.DIRT.createBlockData());
     }
 
 }

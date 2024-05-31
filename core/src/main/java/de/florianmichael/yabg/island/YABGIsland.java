@@ -18,8 +18,8 @@
 package de.florianmichael.yabg.island;
 
 import de.florianmichael.yabg.BukkitPlugin;
+import de.florianmichael.yabg.config.ConfigurationWrapper;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -52,24 +52,23 @@ public final class YABGIsland {
         this.members = members;
     }
 
-    public void prepare() {
-        final int size = BukkitPlugin.instance().config().islandSize;
+    public void prepare(final ConfigurationWrapper config) {
         final World world = BukkitPlugin.instance().world();
 
-        world.setBlockData(middleX(size), 100 /* Just some arbitrary value */, middleZ(size), Material.DIRT.createBlockData());
+        world.setBlockData(middleX(config.islandSize), config.spawnY, middleZ(config.islandSize), config.islandBlock.createBlockData());
     }
 
     public void teleport(final Player player) {
         final int size = BukkitPlugin.instance().config().islandSize;
         final World world = BukkitPlugin.instance().world();
 
-        player.teleport(world.getHighestBlockAt(middleX(size), middleZ(size)).getLocation());
+        player.teleport(world.getHighestBlockAt(middleX(size), middleZ(size)).getLocation().add(0.5, 1, 0.5));
     }
 
     public Location getBlockLocation() {
-        final int size = BukkitPlugin.instance().config().islandSize;
+        final ConfigurationWrapper config = BukkitPlugin.instance().config();
 
-        return new Location(BukkitPlugin.instance().world(), middleX(size), 100, middleZ(size));
+        return new Location(BukkitPlugin.instance().world(), middleX(config.islandSize), config.spawnY, middleZ(config.islandSize));
     }
 
     public int middleX(final int size) {

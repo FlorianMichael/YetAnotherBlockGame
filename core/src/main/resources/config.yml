@@ -9,11 +9,8 @@
 #
 # The prefix for all messages
 chat-format: "&7[&6YABG&7] "
-#
 # The world used to generate the islands, if it doesn't exist we will create it
-world:
-  name: "yabg_world"
-  island-size: 100
+world-name: "yabg_world"
 #
 #----------------------------------------------------------#
 #                      CHAT MESSAGE                        #
@@ -24,3 +21,40 @@ messages:
   spawn-not-set: "&cSpawn has not been set"
   player-only-command: "&cOnly players can use this command!"
   missing-permission: "&cYou do not have permission to use this command!"
+#
+#----------------------------------------------------------#
+#                      ISLAND OPTIONS                      #
+#----------------------------------------------------------#
+#
+island:
+  # The island size
+  size: 100
+  # The island block
+  block: "GRASS_BLOCK"
+  # The island spawn location
+  spawn-y: 100
+#
+#----------------------------------------------------------#
+#                      STAGE OPTIONS                       #
+#----------------------------------------------------------#
+#
+phases:
+  1:
+    - "OAK_LOG"
+    - "OAK_LEAVES"
+    - "OAK_SAPLING"
+    - "DIRT"
+    - "GRASS_BLOCK"
+    - "COBBLESTONE"
+    - "TORCH"
+    - "CHEST"
+    - "OAK_PLANKS"
+  2:
+    - "SAND"
+    - "SANDSTONE"
+    - "CACTUS"
+    - "SUGAR_CANE"
+    - "ACACIA_LOG"
+    - "ACACIA_LEAVES"
+    - "ACACIA_SAPLING"
+    - "ACACIA_PLANKS"
