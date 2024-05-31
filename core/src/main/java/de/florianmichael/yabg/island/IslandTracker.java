@@ -18,6 +18,7 @@
 package de.florianmichael.yabg.island;
 
 import de.florianmichael.yabg.BukkitPlugin;
+import de.florianmichael.yabg.config.ConfigurationWrapper;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.ArrayList;
@@ -33,7 +34,9 @@ public final class IslandTracker {
     }
 
     public YABGIsland create(final UUID owner, final String name) {
-        final int size = BukkitPlugin.instance().config().islandSize;
+        final ConfigurationWrapper config = BukkitPlugin.instance().config();
+        final double maxWorldSize = BukkitPlugin.instance().world().getWorldBorder().getMaxSize(); // HMMMMMMMMMMMMMM
+
         int chunkX = 0;
         int chunkZ = 0;
 
@@ -41,11 +44,11 @@ public final class IslandTracker {
         int finalChunkY = chunkZ;
         while (islands.stream().anyMatch(island -> island.chunkX() == finalChunkX && island.chunkY() == finalChunkY)) {
             chunkX++;
-            if ((chunkX * size) + size >= 30_000_000) { // 30 million blocks is the maximum world size
+            if ((chunkX * config.islandSize) + config.islandSize >= maxWorldSize) {
                 chunkX = 0;
                 chunkZ++;
             }
-            if ((chunkZ * size) + size >= 30_000_000) {
+            if ((chunkZ * config.islandSize) + config.islandSize >= maxWorldSize) {
                 throw new IllegalStateException("No more space for islands!");
             }
         }
@@ -54,7 +57,7 @@ public final class IslandTracker {
         island.setName(name);
         islands.add(island);
 
-        island.prepare();
+        island.prepare(config);
         return island;
     }
 
