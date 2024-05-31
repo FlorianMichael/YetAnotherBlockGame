@@ -20,6 +20,7 @@ package de.florianmichael.yabg.config;
 import de.florianmichael.yabg.island.IslandTracker;
 import de.florianmichael.yabg.island.YABGIsland;
 import de.florianmichael.yabg.util.wrapper.WrappedConfig;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -50,8 +51,9 @@ public class IslandsSave extends WrappedConfig {
             for (String block : blockBreaks) {
                 blockBreaksMap.put(Material.getMaterial(block), group.getInt("block-breaks." + block));
             }
+            final Location location = group.getLocation("spawn-location");
 
-            tracker.islands().add(new YABGIsland(owner, chunkX, chunkY, name, members, config.byName(phase), blockBreaksMap));
+            tracker.islands().add(new YABGIsland(owner, chunkX, chunkY, name, members, config.byName(phase), blockBreaksMap, location));
         }
     }
 
@@ -75,6 +77,9 @@ public class IslandsSave extends WrappedConfig {
                     for (Map.Entry<Material, Integer> entry : island.blockBreaks().entrySet()) {
                         blockBreaks.set(entry.getKey().name(), entry.getValue());
                     }
+                }
+                if (island.spawnLocation() != null) {
+                    section.set("spawn-location", island.spawnLocation());
                 }
             });
         }
