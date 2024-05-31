@@ -40,6 +40,7 @@ public final class YABGIsland {
     private final List<UUID> members;
     private Phase phase;
     private Map<Material, Integer> blockBreaks;
+    private Location spawnLocation;
 
     public YABGIsland(UUID owner, int chunkX, int chunkY) {
         this.owner = owner;
@@ -48,7 +49,7 @@ public final class YABGIsland {
         this.members = new ArrayList<>();
     }
 
-    public YABGIsland(UUID owner, int chunkX, int chunkY, @NonNull String name, List<UUID> members, Phase phase, Map<Material, Integer> blockBreaks) {
+    public YABGIsland(UUID owner, int chunkX, int chunkY, @NonNull String name, List<UUID> members, Phase phase, Map<Material, Integer> blockBreaks, Location spawnLocation) {
         this.owner = owner;
         this.chunkX = chunkX;
         this.chunkY = chunkY;
@@ -56,19 +57,18 @@ public final class YABGIsland {
         this.members = members;
         this.phase = phase;
         this.blockBreaks = blockBreaks;
+        this.spawnLocation = spawnLocation;
     }
 
     public void prepare(final ConfigurationWrapper config) {
         final World world = BukkitPlugin.instance().world();
 
         world.setBlockData(middleX(config.islandSize), config.spawnY, middleZ(config.islandSize), config.islandBlock.createBlockData());
+        spawnLocation = world.getHighestBlockAt(middleX(config.islandSize), middleZ(config.islandSize)).getLocation();
     }
 
     public void teleport(final Player player) {
-        final int size = BukkitPlugin.instance().config().islandSize;
-        final World world = BukkitPlugin.instance().world();
-
-        player.teleport(world.getHighestBlockAt(middleX(size), middleZ(size)).getLocation().add(0.5, 1, 0.5));
+        player.teleport(spawnLocation.add(0.5, 1, 0.5));
     }
 
     public Location getBlockLocation() {
@@ -102,6 +102,10 @@ public final class YABGIsland {
         this.name = name;
     }
 
+    public void setSpawnLocation(Location spawnLocation) {
+        this.spawnLocation = spawnLocation;
+    }
+
     public UUID owner() {
         return owner;
     }
@@ -128,6 +132,10 @@ public final class YABGIsland {
 
     public Map<Material, Integer> blockBreaks() {
         return blockBreaks;
+    }
+
+    public Location spawnLocation() {
+        return spawnLocation;
     }
 
 }
