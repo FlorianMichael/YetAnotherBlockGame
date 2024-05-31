@@ -43,13 +43,14 @@ public final class BlockBreakListener extends IslandListenerBase {
 
     @EventHandler
     public void onBlockBreak(final BlockBreakEvent e) {
-        final Player player = e.getPlayer();
-        call(player, island -> {
-            if (e.getBlock().getLocation().equals(island.getBlockLocation())) {
-                e.setCancelled(true);
-                updatePhase(player, island);
-            }
-        });
+        final YABGIsland island = getIsland(e.getPlayer());
+        if (island == null) {
+            return;
+        }
+        if (e.getBlock().getLocation().equals(island.getBlockLocation())) {
+            e.setCancelled(true);
+            updatePhase(e.getPlayer(), island);
+        }
     }
 
 }

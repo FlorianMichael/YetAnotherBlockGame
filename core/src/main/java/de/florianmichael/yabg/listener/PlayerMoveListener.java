@@ -18,6 +18,7 @@
 package de.florianmichael.yabg.listener;
 
 import de.florianmichael.yabg.BukkitPlugin;
+import de.florianmichael.yabg.island.YABGIsland;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -37,25 +38,26 @@ public final class PlayerMoveListener extends IslandListenerBase {
 
     @EventHandler
     public void onPlayerMove(final PlayerMoveEvent e) {
+        final YABGIsland island = getIsland(e.getPlayer());
+        if (island == null) {
+            return;
+        }
+        final Location to = e.getTo();
         final int size = instance.config().islandSize;
-
-        call(e.getPlayer(), island -> {
-            final Location to = e.getTo();
-            if (to.x() > island.x(size) + size || to.x() < island.x(size) || to.z() > island.z(size) + size || to.z() < island.z(size)) {
-                e.setCancelled(true);
-                // Only send notifications every 10 seconds
-                if (lastNotification.containsKey(e.getPlayer()) && System.currentTimeMillis() - lastNotification.get(e.getPlayer()) < 10_000) {
-                    return;
-                }
-                e.getPlayer().sendMessage("You are not allowed to leave your island!");
-                lastNotification.put(e.getPlayer(), System.currentTimeMillis());
+        if (to.x() > island.x(size) + size || to.x() < island.x(size) || to.z() > island.z(size) + size || to.z() < island.z(size)) {
+            e.setCancelled(true);
+            // Only send notifications every 10 seconds
+            if (lastNotification.containsKey(e.getPlayer()) && System.currentTimeMillis() - lastNotification.get(e.getPlayer()) < 10_000) {
+                return;
             }
+            e.getPlayer().sendMessage("You are not allowed to leave your island!");
+            lastNotification.put(e.getPlayer(), System.currentTimeMillis());
+        }
 
-            // Remove from the notification map if player has been inside his island for more than 5 seconds
-            if (lastNotification.containsKey(e.getPlayer()) && System.currentTimeMillis() - lastNotification.get(e.getPlayer()) > 5000) {
-                lastNotification.remove(e.getPlayer());
-            }
-        });
+        // Remove from the notification map if player has been inside his island for more than 5 seconds
+        if (lastNotification.containsKey(e.getPlayer()) && System.currentTimeMillis() - lastNotification.get(e.getPlayer()) > 5000) {
+            lastNotification.remove(e.getPlayer());
+        }
     }
 
     @EventHandler

@@ -22,8 +22,6 @@ import de.florianmichael.yabg.island.YABGIsland;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
-import java.util.function.Consumer;
-
 public abstract class IslandListenerBase implements Listener {
 
     protected final BukkitPlugin instance;
@@ -32,12 +30,11 @@ public abstract class IslandListenerBase implements Listener {
         this.instance = instance;
     }
 
-    public void call(final Player player, final Consumer<YABGIsland> consumer) {
+    public YABGIsland getIsland(final Player player) {
         if (player.getWorld() == instance.world()) {
-            final YABGIsland island = instance.islandTracker().byOwner(player.getUniqueId());
-            if (island != null) {
-                consumer.accept(island);
-            }
+            return instance.islandTracker().byOwner(player.getUniqueId());
+        } else {
+            return null;
         }
     }
 

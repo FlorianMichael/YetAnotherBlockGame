@@ -18,6 +18,7 @@
 package de.florianmichael.yabg.listener;
 
 import de.florianmichael.yabg.BukkitPlugin;
+import de.florianmichael.yabg.island.YABGIsland;
 import net.kyori.adventure.text.Component;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -36,7 +37,10 @@ public final class PlayerDeathListener extends IslandListenerBase {
 
     @EventHandler
     public void onPlayerDeath(final PlayerRespawnEvent e) {
-        call(e.getPlayer(), island -> e.setRespawnLocation(island.getBlockLocation().add(0, 1, 0)));
+        final YABGIsland island = getIsland(e.getPlayer());
+        if (island != null) {
+            e.setRespawnLocation(island.getBlockLocation().add(0.5, 1, 0.5));
+        }
     }
 
 }
