@@ -54,6 +54,14 @@ public final class IslandCommand implements WrappedCommand {
             player.sendMessage(prefixed("§aIsland created!"));
             island.teleport(player);
         });
+        subCommands.put("setSpawn", (player, args) -> {
+            final YABGIsland island = tracker.byOwner(player.getUniqueId());
+            if (island == null) {
+                player.sendMessage(prefixed("§cYou don't have an island!"));
+                return;
+            }
+            island.setSpawnLocation(player.getLocation());
+        });
         subCommands.put("delete", (player, args) -> {
         });
         subCommands.put("visit", (player, args) -> {
