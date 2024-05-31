@@ -32,11 +32,13 @@ public final class PlayerDeathListener extends IslandListenerBase {
 
     @EventHandler
     public void onPlayerDeath(final PlayerDeathEvent e) {
-        e.deathMessage(Component.empty()); // TODO setting?
+        if (e.getPlayer().getWorld() == instance.world()) {
+            e.deathMessage(Component.empty());
+        }
     }
 
     @EventHandler
-    public void onPlayerDeath(final PlayerRespawnEvent e) {
+    public void onPlayerRespawn(final PlayerRespawnEvent e) {
         final YABGIsland island = getIsland(e.getPlayer());
         if (island != null) {
             e.setRespawnLocation(island.getBlockLocation().add(0.5, 1, 0.5));
