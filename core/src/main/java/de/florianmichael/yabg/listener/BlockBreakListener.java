@@ -18,6 +18,7 @@
 package de.florianmichael.yabg.listener;
 
 import de.florianmichael.yabg.BukkitPlugin;
+import de.florianmichael.yabg.island.YABGIsland;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
@@ -32,15 +33,21 @@ public final class BlockBreakListener extends IslandListenerBase {
         super(instance);
     }
 
+    private void updatePhase(final Player player, final YABGIsland island) {
+        if (island.phase() == null) { // Initial phase setup
+            island.updatePhase(instance.config().nextPhase(null));
+        }
+        final Item entity = (Item) player.getWorld().spawnEntity(player.getLocation(), EntityType.ITEM);
+        entity.setItemStack(new ItemStack(Material.DIAMOND_BLOCK, 64));
+    }
+
     @EventHandler
     public void onBlockBreak(final BlockBreakEvent e) {
         final Player player = e.getPlayer();
         call(player, island -> {
             if (e.getBlock().getLocation().equals(island.getBlockLocation())) {
                 e.setCancelled(true);
-                final Item entity = (Item) player.getWorld().spawnEntity(player.getLocation(), EntityType.ITEM);
-                // TODO create models to calculate a good item to give
-                entity.setItemStack(new ItemStack(Material.DIAMOND_BLOCK, 64));
+                updatePhase(player, island);
             }
         });
     }

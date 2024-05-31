@@ -20,18 +20,20 @@ package de.florianmichael.yabg.config;
 import de.florianmichael.yabg.island.IslandTracker;
 import de.florianmichael.yabg.island.YABGIsland;
 import de.florianmichael.yabg.util.wrapper.WrappedConfig;
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
+// TODO having a database for this would be a lot better, but shrug for now
 public class IslandsSave extends WrappedConfig {
 
     private final IslandTracker tracker;
+    private final ConfigurationWrapper config;
 
-    public IslandsSave(final IslandTracker tracker) {
+    public IslandsSave(final IslandTracker tracker, final ConfigurationWrapper config) {
         this.tracker = tracker;
+        this.config = config;
     }
 
     @Override
@@ -42,7 +44,14 @@ public class IslandsSave extends WrappedConfig {
             final UUID owner = UUID.fromString(group.getName());
             final String name = group.isString("name") ? group.getString("name") : null;
             final List<UUID> members = group.isList("members") ? group.getStringList("members").stream().map(UUID::fromString).toList() : new ArrayList<>();
-            tracker.islands().add(new YABGIsland(owner, chunkX, chunkY, name, members));
+            final String phase = group.isString("phase") ? group.getString("phase") : null;
+            final Set<String> blockBreaks = group.isConfigurationSection("block-breaks") ? group.getConfigurationSection("block-breaks").getKeys(false) : new HashSet<>();
+            final Map<Material, Integer> blockBreaksMap = new HashMap<>();
+            for (String block : blockBreaks) {
+                blockBreaksMap.put(Material.getMaterial(block), group.getInt("block-breaks." + block));
+            }
+
+            tracker.islands().add(new YABGIsland(owner, chunkX, chunkY, name, members, config.byName(phase), blockBreaksMap));
         }
     }
 
@@ -57,6 +66,15 @@ public class IslandsSave extends WrappedConfig {
                 }
                 if (!island.members().isEmpty()) {
                     section.set("members", island.members().stream().map(UUID::toString).toList());
+                }
+                if (island.phase() != null) {
+                    section.set("phase", island.phase().name());
+                }
+                if (!island.blockBreaks().isEmpty()) {
+                    ConfigurationSection blockBreaks = section.createSection("block-breaks");
+                    for (Map.Entry<Material, Integer> entry : island.blockBreaks().entrySet()) {
+                        blockBreaks.set(entry.getKey().name(), entry.getValue());
+                    }
                 }
             });
         }

@@ -20,6 +20,7 @@ package de.florianmichael.yabg.island;
 import de.florianmichael.yabg.BukkitPlugin;
 import de.florianmichael.yabg.config.ConfigurationWrapper;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -27,6 +28,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public final class YABGIsland {
@@ -36,6 +38,8 @@ public final class YABGIsland {
     private final int chunkX;
     private final int chunkY;
     private final List<UUID> members;
+    private Phase phase;
+    private Map<Material, Integer> blockBreaks;
 
     public YABGIsland(UUID owner, int chunkX, int chunkY) {
         this.owner = owner;
@@ -44,12 +48,14 @@ public final class YABGIsland {
         this.members = new ArrayList<>();
     }
 
-    public YABGIsland(UUID owner, int chunkX, int chunkY, @NonNull String name, List<UUID> members) {
+    public YABGIsland(UUID owner, int chunkX, int chunkY, @NonNull String name, List<UUID> members, Phase phase, Map<Material, Integer> blockBreaks) {
         this.owner = owner;
         this.chunkX = chunkX;
         this.chunkY = chunkY;
         this.name = name;
         this.members = members;
+        this.phase = phase;
+        this.blockBreaks = blockBreaks;
     }
 
     public void prepare(final ConfigurationWrapper config) {
@@ -87,6 +93,11 @@ public final class YABGIsland {
         return chunkY * size;
     }
 
+    public void updatePhase(final Phase phase) {
+        this.phase = phase;
+        blockBreaks.clear();
+    }
+
     public void setName(@NonNull String name) {
         this.name = name;
     }
@@ -109,6 +120,14 @@ public final class YABGIsland {
 
     public List<UUID> members() {
         return members;
+    }
+
+    public Phase phase() {
+        return phase;
+    }
+
+    public Map<Material, Integer> blockBreaks() {
+        return blockBreaks;
     }
 
 }

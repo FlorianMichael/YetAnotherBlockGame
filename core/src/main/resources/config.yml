@@ -35,26 +35,60 @@ island:
   spawn-y: 100
 #
 #----------------------------------------------------------#
-#                      STAGE OPTIONS                       #
+#                      PHASE OPTIONS                       #
 #----------------------------------------------------------#
 #
 phases:
-  1:
-    - "OAK_LOG"
-    - "OAK_LEAVES"
-    - "OAK_SAPLING"
-    - "DIRT"
-    - "GRASS_BLOCK"
-    - "COBBLESTONE"
-    - "TORCH"
-    - "CHEST"
-    - "OAK_PLANKS"
-  2:
-    - "SAND"
-    - "SANDSTONE"
-    - "CACTUS"
-    - "SUGAR_CANE"
-    - "ACACIA_LOG"
-    - "ACACIA_LEAVES"
-    - "ACACIA_SAPLING"
-    - "ACACIA_PLANKS"
+  begin:
+    OAK_LOG:
+      amount: 10
+      possibility: 100
+    OAK_LEAVES:
+      amount: 10
+      possibility: 100
+    OAK_SAPLING:
+      amount: 10
+      possibility: 100
+    DIRT:
+      amount: 10
+      possibility: 100
+    GRASS_BLOCK:
+      amount: 10
+      possibility: 100
+    COBBLESTONE:
+      amount: 10
+      possibility: 100
+    TORCH:
+      amount: 10
+      possibility: 100
+    CHEST:
+      amount: 10
+      possibility: 100
+    OAK_PLANKS:
+      amount: 10
+      possibility: 100
+  stage-1:
+    SAND:
+      amount: 10
+      possibility: 100
+    SANDSTONE:
+      amount: 10
+      possibility: 100
+    CACTUS:
+      amount: 10
+      possibility: 100
+    SUGAR_CANE:
+      amount: 10
+      possibility: 100
+    ACACIA_LOG:
+      amount: 10
+      possibility: 100
+    ACACIA_LEAVES:
+      amount: 10
+      possibility: 100
+    ACACIA_SAPLING:
+      amount: 10
+      possibility: 100
+    ACACIA_PLANKS:
+      amount: 10
+      possibility: 100

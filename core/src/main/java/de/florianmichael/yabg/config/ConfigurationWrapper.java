@@ -19,11 +19,15 @@ package de.florianmichael.yabg.config;
 
 import de.florianmichael.yabg.BukkitPlugin;
 import de.florianmichael.yabg.island.IslandTracker;
+import de.florianmichael.yabg.island.Phase;
+import de.florianmichael.yabg.island.WrappedMaterial;
 import de.florianmichael.yabg.util.wrapper.WrappedConfig;
 import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * Wrapper to handle settings stored in config.yml, also stores other config files
@@ -45,10 +49,12 @@ public final class ConfigurationWrapper extends WrappedConfig {
     public Material islandBlock;
     public int spawnY;
 
+    public List<Phase> phases;
+
     public ConfigurationWrapper(final FileConfiguration config, final IslandTracker tracker) {
         super(config);
         this.positions = new PositionsSave();
-        this.islands = new IslandsSave(tracker);
+        this.islands = new IslandsSave(tracker, this);
     }
 
     @Override
@@ -67,6 +73,18 @@ public final class ConfigurationWrapper extends WrappedConfig {
         islandBlock = Material.valueOf(get("island.block", String.class));
         spawnY = get("island.spawn-y", Integer.class);
 
+        for (String phase : group("phases").getKeys(false)) {
+            final ConfigurationSection group = group("phases." + phase);
+            phases.add(new Phase(phase, group.getKeys(false).stream().map(s -> {
+                final Material material = Material.valueOf(s);
+                final ConfigurationSection innerGroup = group("phases." + phase + "." + s);
+                final int amount = innerGroup.getInt("amount");
+                final int possibility = innerGroup.getInt("possibility");
+
+                return new WrappedMaterial(material, amount, possibility);
+            }).toArray(WrappedMaterial[]::new)));
+        }
+
         // Internal save files
         final File folder = BukkitPlugin.instance().getDataFolder();
         this.positions.load(folder, "positions.yml");
@@ -75,6 +93,19 @@ public final class ConfigurationWrapper extends WrappedConfig {
 
     public String message(final String key) {
         return chatFormat + colorString("messages." + key);
+    }
+
+    public Phase byName(final String name) {
+        return phases.stream().filter(phase -> phase.name().equals(name)).findFirst().orElse(null);
+    }
+
+    public Phase nextPhase(final Phase phase) {
+        if (phase == null) {
+            return phases.getFirst();
+        } else {
+            final int index = phases.indexOf(phase);
+            return index == phases.size() - 1 ? phases.getFirst() : phases.get(index + 1);
+        }
     }
 
     @Override

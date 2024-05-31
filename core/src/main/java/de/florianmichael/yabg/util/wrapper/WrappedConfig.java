@@ -66,6 +66,10 @@ public abstract class WrappedConfig {
         consumer.accept(config.createSection(name));
     }
 
+    public ConfigurationSection group(final String name) {
+        return config.getConfigurationSection(name);
+    }
+
     public List<ConfigurationSection> groups() {
         return config.getKeys(false).stream().map(config::getConfigurationSection).toList();
     }
