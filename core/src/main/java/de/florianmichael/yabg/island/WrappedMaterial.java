@@ -20,5 +20,4 @@ package de.florianmichael.yabg.island;
 import org.bukkit.Material;
 
 public record WrappedMaterial(Material material, int amount, int possibility) {
-
 }

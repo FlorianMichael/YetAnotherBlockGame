@@ -39,9 +39,12 @@ island:
 #----------------------------------------------------------#
 #
 phases:
+  # Every phase is defined by its name and a list of materials
   begin:
     OAK_LOG:
+      # Amount defines how often this block has to be spawned to switch to the next phase
       amount: 10
+      # Possibility defines the chance of this block to be spawned
       possibility: 100
     OAK_LEAVES:
       amount: 10
