@@ -60,11 +60,14 @@ public final class YABGIsland {
         this.spawnLocation = spawnLocation;
     }
 
-    public void prepare(final ConfigurationWrapper config) {
+    /**
+     * Sets both spawn location and default block for the island
+     */
+    public void initialize(final ConfigurationWrapper config) {
         final World world = BukkitPlugin.instance().world();
 
+        spawnLocation = getBlockLocation();
         world.setBlockData(middleX(config.islandSize), config.spawnY, middleZ(config.islandSize), config.islandBlock.createBlockData());
-        spawnLocation = world.getHighestBlockAt(middleX(config.islandSize), middleZ(config.islandSize)).getLocation();
     }
 
     public void teleport(final Player player) {

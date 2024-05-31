@@ -57,7 +57,7 @@ public final class IslandTracker {
         island.setName(name);
         islands.add(island);
 
-        island.prepare(config);
+        island.initialize(config);
         return island;
     }
 
