@@ -49,17 +49,6 @@ public final class YABGIsland {
         this.members = new ArrayList<>();
     }
 
-    public YABGIsland(UUID owner, int chunkX, int chunkY, @NonNull String name, List<UUID> members, Phase phase, Map<Material, Integer> blockBreaks, Location spawnLocation) {
-        this.owner = owner;
-        this.chunkX = chunkX;
-        this.chunkY = chunkY;
-        this.name = name;
-        this.members = members;
-        this.phase = phase;
-        this.blockBreaks = blockBreaks;
-        this.spawnLocation = spawnLocation;
-    }
-
     /**
      * Sets both spawn location and default block for the island
      */
@@ -101,20 +90,16 @@ public final class YABGIsland {
         blockBreaks.clear();
     }
 
-    public void setName(@NonNull String name) {
-        this.name = name;
-    }
-
-    public void setSpawnLocation(Location spawnLocation) {
-        this.spawnLocation = spawnLocation;
-    }
-
     public UUID owner() {
         return owner;
     }
 
-    public @Nullable String name() {
+    public String name() {
         return name;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
     }
 
     public int chunkX() {
@@ -133,12 +118,23 @@ public final class YABGIsland {
         return phase;
     }
 
+    public void setPhase(Phase phase) {
+        this.phase = phase;
+    }
+
     public Map<Material, Integer> blockBreaks() {
         return blockBreaks;
+    }
+
+    public void setBlockBreaks(Map<Material, Integer> blockBreaks) {
+        this.blockBreaks = blockBreaks;
     }
 
     public Location spawnLocation() {
         return spawnLocation;
     }
 
+    public void setSpawnLocation(Location spawnLocation) {
+        this.spawnLocation = spawnLocation;
+    }
 }

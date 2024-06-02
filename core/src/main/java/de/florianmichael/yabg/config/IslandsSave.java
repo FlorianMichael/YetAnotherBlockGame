@@ -43,17 +43,31 @@ public class IslandsSave extends WrappedConfig {
             final int chunkX = group.getInt("chunk-x");
             final int chunkY = group.getInt("chunk-y");
             final UUID owner = UUID.fromString(group.getName());
-            final String name = group.isString("name") ? group.getString("name") : null;
-            final List<UUID> members = group.isList("members") ? group.getStringList("members").stream().map(UUID::fromString).toList() : new ArrayList<>();
-            final String phase = group.isString("phase") ? group.getString("phase") : null;
-            final Set<String> blockBreaks = group.isConfigurationSection("block-breaks") ? group.getConfigurationSection("block-breaks").getKeys(false) : new HashSet<>();
-            final Map<Material, Integer> blockBreaksMap = new HashMap<>();
-            for (String block : blockBreaks) {
-                blockBreaksMap.put(Material.getMaterial(block), group.getInt("block-breaks." + block));
-            }
-            final Location location = group.getLocation("spawn-location");
 
-            tracker.islands().add(new YABGIsland(owner, chunkX, chunkY, name, members, config.byName(phase), blockBreaksMap, location));
+            final YABGIsland island = new YABGIsland(owner, chunkX, chunkY);
+
+            if (group.isString("name")) {
+                island.setName(group.getString("name"));
+            }
+            if (group.isList("members")) {
+                final List<UUID> members = group.getStringList("members").stream().map(UUID::fromString).toList();
+                island.members().addAll(members);
+            }
+            if (group.isString("phase")) {
+                island.setPhase(config.byName(group.getString("phase")));
+            }
+            if (group.isConfigurationSection("block-breaks")) {
+                final Set<String> blockBreaks = group.getConfigurationSection("block-breaks").getKeys(false);
+                final Map<Material, Integer> blockBreaksMap = new HashMap<>();
+                for (String block : blockBreaks) {
+                    blockBreaksMap.put(Material.getMaterial(block), group.getInt("block-breaks." + block));
+                }
+                island.setBlockBreaks(blockBreaksMap);
+            }
+            if (group.isLocation("spawn-location")) {
+                island.setSpawnLocation(group.getLocation("spawn-location"));
+            }
+            tracker.islands().add(island);
         }
     }
 
