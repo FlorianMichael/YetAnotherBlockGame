@@ -20,7 +20,6 @@ package de.florianmichael.yabg.config;
 import de.florianmichael.yabg.island.IslandTracker;
 import de.florianmichael.yabg.island.YABGIsland;
 import de.florianmichael.yabg.util.wrapper.WrappedConfig;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 

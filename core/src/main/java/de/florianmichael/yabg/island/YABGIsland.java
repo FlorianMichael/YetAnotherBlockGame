@@ -23,7 +23,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.ArrayList;
@@ -98,7 +97,7 @@ public final class YABGIsland {
         return name;
     }
 
-    public void setName(final String name) {
+    public void setName(final @Nullable String name) {
         this.name = name;
     }
 
@@ -137,4 +136,5 @@ public final class YABGIsland {
     public void setSpawnLocation(Location spawnLocation) {
         this.spawnLocation = spawnLocation;
     }
+
 }

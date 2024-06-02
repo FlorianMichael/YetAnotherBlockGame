@@ -49,7 +49,7 @@ public final class IslandTracker {
                 chunkZ++;
             }
             if ((chunkZ * config.islandSize) + config.islandSize >= maxWorldSize) {
-                throw new IllegalStateException("No more space for islands!");
+                throw new IllegalStateException(config.noSpaceForIslandsMessage);
             }
         }
 

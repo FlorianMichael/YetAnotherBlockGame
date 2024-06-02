@@ -43,17 +43,17 @@ public final class IslandCommand implements WrappedCommand {
             if (args.length > 0) {
                 name = de.florianmichael.yabg.util.StringUtil.stripInvalidChars(args[0]);
                 if (name.isEmpty()) {
-                    player.sendMessage(prefixed("§cInvalid name!"));
+                    player.sendMessage(config.invalidNameMessage);
                     return;
                 }
             }
             YABGIsland island = tracker.byOwner(player.getUniqueId());
             if (island != null) {
-                player.sendMessage(prefixed("§cYou already have an island!"));
+                player.sendMessage(config.alreadyHasIslandMessage);
                 return;
             }
             island = tracker.create(player.getUniqueId(), name);
-            player.sendMessage(prefixed("§aIsland created!"));
+            player.sendMessage(config.islandCreatedMessage);
             island.teleport(player);
         });
         subCommands.put("setSpawn", (player, args) -> {
@@ -72,7 +72,7 @@ public final class IslandCommand implements WrappedCommand {
             final YABGIsland island = getIsland(player);
             if (island != null) {
                 island.teleport(player);
-                player.sendMessage(prefixed("§aTeleported to your island!"));
+                player.sendMessage(config.teleportedToIslandMessage);
             }
         });
         subCommands.put("kick", (player, args) -> {
@@ -86,7 +86,7 @@ public final class IslandCommand implements WrappedCommand {
     private YABGIsland getIsland(final Player player) {
         final YABGIsland island = tracker.byOwner(player.getUniqueId());
         if (island == null) {
-            player.sendMessage(prefixed("§cYou don't have an island!"));
+            player.sendMessage(config.dontOwnIslandMessage);
         }
         return island;
     }
@@ -94,7 +94,7 @@ public final class IslandCommand implements WrappedCommand {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (args.length == 0) {
-            sender.sendMessage(prefixed("§cInvalid usage!"));
+            sender.sendMessage(config.invalidUsageMessage);
             sender.sendMessage("");
             for (String string : subCommands.keySet()) {
                 sender.sendMessage(prefixed("§c/island " + string));
@@ -107,13 +107,13 @@ public final class IslandCommand implements WrappedCommand {
         }
         final BiConsumer<Player, String[]> subCommand = subCommands.get(args[0]);
         if (subCommand == null) {
-            sender.sendMessage(prefixed("§cInvalid subcommand!"));
+            sender.sendMessage(config.invalidSubCommandMessage);
             return;
         }
         try {
             subCommand.accept(player, Arrays.copyOfRange(args, 1, args.length)); // Remove subcommand
         } catch (Exception e) { // Exceptions should only be thrown when invalid states are reached
-            sender.sendMessage(prefixed("§cAn error occurred! " + e.getMessage()));
+            sender.sendMessage(String.format(config.errorOccurredMessage, e.getMessage()));
         }
     }
 

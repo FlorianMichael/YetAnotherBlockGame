@@ -33,11 +33,11 @@ public final class SetSpawnCommand implements WrappedCommand {
     @Override
     public void execute(CommandSender sender, String[] args) {
         final Player player = getPlayer(sender);
-        if (player == null || !hasPermission(player, "yabg.setspawn")) {
+        if (player == null || !hasPermission(player, config.setSpawnPermission)) {
             return;
         }
         config.positions().spawnLocation = player.getLocation();
-        player.sendMessage(prefixed("§aSpawn location set!"));
+        player.sendMessage(config.spawnLocationSetMessage);
     }
 
 }

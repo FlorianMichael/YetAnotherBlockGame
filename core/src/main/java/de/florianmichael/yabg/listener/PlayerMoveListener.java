@@ -50,7 +50,7 @@ public final class PlayerMoveListener extends IslandListenerBase {
             if (lastNotification.containsKey(e.getPlayer()) && System.currentTimeMillis() - lastNotification.get(e.getPlayer()) < 10_000) {
                 return;
             }
-            e.getPlayer().sendMessage("You are not allowed to leave your island!");
+            e.getPlayer().sendMessage(instance.config().notAllowedToLeaveMessage);
             lastNotification.put(e.getPlayer(), System.currentTimeMillis());
         }
 

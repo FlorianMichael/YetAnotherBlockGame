@@ -39,11 +39,24 @@ public final class ConfigurationWrapper extends WrappedConfig {
 
     public String chatFormat;
     public String worldName;
+    public String setSpawnPermission;
 
     public String spawnMessage;
     public String spawnNotSetMessage;
     public String playerOnlyCommandMessage;
     public String missingPermissionMessage;
+    public String noSpaceForIslandsMessage;
+    public String invalidNameMessage;
+    public String alreadyHasIslandMessage;
+    public String islandCreatedMessage;
+    public String teleportedToIslandMessage;
+    public String dontOwnIslandMessage;
+    public String invalidUsageMessage;
+    public String invalidSubCommandMessage;
+    public String errorOccurredMessage;
+    public String spawnLocationSetMessage;
+    public String notAllowedToLeaveMessage;
+    public String welcomeMessage;
 
     public int islandSize;
     public Material islandBlock;
@@ -62,12 +75,25 @@ public final class ConfigurationWrapper extends WrappedConfig {
         // Main options
         chatFormat = colorString("chat-format");
         worldName = get("world-name", String.class);
+        setSpawnPermission = get("set-spawn-permission", String.class);
 
         // Messages
         spawnMessage = message("spawn-teleport");
         spawnNotSetMessage = message("spawn-not-set");
         playerOnlyCommandMessage = message("player-only-command");
         missingPermissionMessage = message("missing-permission");
+        noSpaceForIslandsMessage = message("no-space-for-islands");
+        invalidNameMessage = message("invalid-name");
+        alreadyHasIslandMessage = message("already-has-island");
+        islandCreatedMessage = message("island-created");
+        teleportedToIslandMessage = message("teleported-to-island");
+        dontOwnIslandMessage = message("dont-own-island");
+        invalidUsageMessage = message("invalid-usage");
+        invalidSubCommandMessage = message("invalid-sub-command");
+        errorOccurredMessage = message("error-occurred");
+        spawnLocationSetMessage = message("spawn-location-set");
+        notAllowedToLeaveMessage = message("not-allowed-to-leave");
+        welcomeMessage = message("welcome");
 
         islandSize = get("island.size", Integer.class);
         islandBlock = Material.valueOf(get("island.block", String.class));

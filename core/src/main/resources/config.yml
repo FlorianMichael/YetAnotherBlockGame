@@ -11,6 +11,8 @@
 chat-format: "&7[&6YABG&7] "
 # The world used to generate the islands, if it doesn't exist we will create it
 world-name: "yabg_world"
+# Required to execute /setspawn
+set-spawn-permission: "yabg.setspawn"
 #
 #----------------------------------------------------------#
 #                      CHAT MESSAGE                        #
@@ -21,6 +23,18 @@ messages:
   spawn-not-set: "&cSpawn has not been set"
   player-only-command: "&cOnly players can use this command!"
   missing-permission: "&cYou do not have permission to use this command!"
+  no-space-for-islands: "&cThere is no space for islands!"
+  invalid-name: "&cInvalid name!"
+  already-has-island: "&cYou already have an island!"
+  island-created: "&aIsland created!"
+  teleported-to-island: "&aYou have been teleported to your island!"
+  dont-own-island: "&cYou do not own an island!"
+  invalid-usage: "&cInvalid usage!"
+  invalid-sub-command: "&cInvalid sub-command!"
+  error-occurred: "&cAn error occurred: %s!"
+  spawn-location-set: "&aSpawn location set!"
+  not-allowed-to-leave: "&cYou are not allowed to leave your island!"
+  welcome: "&aWelcome to YetAnotherBlockGame!"
 #
 #----------------------------------------------------------#
 #                      ISLAND OPTIONS                      #

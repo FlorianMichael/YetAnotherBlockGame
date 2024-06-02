@@ -19,8 +19,6 @@ package de.florianmichael.yabg.command;
 
 import de.florianmichael.yabg.BukkitPlugin;
 import de.florianmichael.yabg.util.wrapper.WrappedCommand;
-import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 
 // Test-only command, not to be loaded later on

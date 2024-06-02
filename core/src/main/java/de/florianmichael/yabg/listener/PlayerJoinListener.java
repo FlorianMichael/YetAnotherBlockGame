@@ -34,7 +34,7 @@ public final class PlayerJoinListener implements Listener {
     public void onPlayerJoin(final PlayerJoinEvent e) {
         if (config.positions().spawnLocation != null) {
             e.getPlayer().teleport(config.positions().spawnLocation);
-            e.getPlayer().sendMessage("Welcome to YetAnotherBlockGame!");
+            e.getPlayer().sendMessage(config.welcomeMessage);
         }
     }
 
