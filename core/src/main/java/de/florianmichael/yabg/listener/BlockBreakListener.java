@@ -37,7 +37,7 @@ public final class BlockBreakListener extends IslandListenerBase {
         if (island.phase() == null) { // Initial phase setup
             island.updatePhase(instance.config().nextPhase(null));
         }
-        final Item entity = (Item) player.getWorld().spawnEntity(player.getLocation(), EntityType.ITEM);
+        final Item entity = (Item) player.getWorld().spawnEntity(island.getBlockLocation().add(0, 1, 0), EntityType.ITEM);
         entity.setItemStack(new ItemStack(Material.DIAMOND_BLOCK, 64));
     }
 
