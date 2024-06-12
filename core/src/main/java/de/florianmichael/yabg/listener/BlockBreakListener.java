@@ -19,6 +19,7 @@ package de.florianmichael.yabg.listener;
 
 import de.florianmichael.yabg.BukkitPlugin;
 import de.florianmichael.yabg.island.YABGIsland;
+import io.papermc.paper.event.block.BlockPreDispenseEvent;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -26,7 +27,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.*;
+import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.inventory.ItemStack;
 
 public final class BlockBreakListener extends IslandListenerBase {
@@ -62,6 +64,15 @@ public final class BlockBreakListener extends IslandListenerBase {
             return;
         }
         world.setBlockData(blockLocation, nextMaterial.createBlockData());
+    }
+
+    @EventHandler
+    public void onBlockPhysics(final EntityChangeBlockEvent e) {
+        for (YABGIsland island : instance.islandTracker().islands()) {
+            if (island.getBlockLocation().equals(e.getBlock().getLocation())) {
+                e.setCancelled(true);
+            }
+        }
     }
 
     @EventHandler
