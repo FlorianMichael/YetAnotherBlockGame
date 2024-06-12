@@ -27,6 +27,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -99,6 +100,7 @@ public final class ConfigurationWrapper extends WrappedConfig {
         islandBlock = Material.valueOf(get("island.block", String.class));
         spawnY = get("island.spawn-y", Integer.class);
 
+        phases = new ArrayList<>();
         for (String phase : group("phases").getKeys(false)) {
             final ConfigurationSection group = group("phases." + phase);
             phases.add(new Phase(phase, group.getKeys(false).stream().map(s -> {
