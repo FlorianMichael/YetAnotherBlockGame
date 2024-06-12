@@ -19,7 +19,9 @@ package de.florianmichael.yabg.listener;
 
 import de.florianmichael.yabg.BukkitPlugin;
 import de.florianmichael.yabg.island.YABGIsland;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -37,8 +39,29 @@ public final class BlockBreakListener extends IslandListenerBase {
         if (island.phase() == null) { // Initial phase setup
             island.updatePhase(instance.config().nextPhase(null));
         }
-        final Item entity = (Item) player.getWorld().spawnEntity(island.getBlockLocation().add(0, 1, 0), EntityType.ITEM);
-        entity.setItemStack(new ItemStack(Material.DIAMOND_BLOCK, 64));
+        final Location blockLocation = island.getBlockLocation();
+        final World world = player.getWorld();
+
+        final Material material = world.getBlockData(blockLocation).getMaterial();
+        if (!island.phase().contains(material)) {
+            player.sendMessage("The block you tried to break is not part of the current phase. Please report to an admin.");
+            return;
+        }
+
+        final Item entity = (Item) world.spawnEntity(blockLocation.clone().add(0, 1, 0), EntityType.ITEM);
+        entity.setItemStack(new ItemStack(material, 1));
+
+        island.blockBreaks().put(material, island.blockBreaks().getOrDefault(material, 0) + 1);
+        if (island.phase().hasFinished(island.blockBreaks())) {
+            island.updatePhase(instance.config().nextPhase(island.phase()));
+        }
+
+        final Material nextMaterial = island.phase().rand();
+        if (nextMaterial == null) {
+            player.sendMessage("An error occurred while trying to determine the next block. Please report to an admin.");
+            return;
+        }
+        world.setBlockData(blockLocation, nextMaterial.createBlockData());
     }
 
     @EventHandler

@@ -62,8 +62,6 @@ public class IslandsSave extends WrappedConfig {
                     blockBreaksMap.put(Material.getMaterial(block), group.getInt("block-breaks." + block));
                 }
                 island.setBlockBreaks(blockBreaksMap);
-            } else {
-                island.setBlockBreaks(new HashMap<>());
             }
             if (group.isLocation("spawn-location")) {
                 island.setSpawnLocation(group.getLocation("spawn-location"));

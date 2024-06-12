@@ -25,10 +25,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public final class YABGIsland {
 
@@ -45,7 +42,9 @@ public final class YABGIsland {
         this.owner = owner;
         this.chunkX = chunkX;
         this.chunkY = chunkY;
+
         this.members = new ArrayList<>();
+        this.blockBreaks = new HashMap<>();
     }
 
     /**

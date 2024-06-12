@@ -19,15 +19,43 @@ package de.florianmichael.yabg.island;
 
 import org.bukkit.Material;
 
+import java.util.Map;
 import java.util.Random;
 
 public record Phase(String name, WrappedMaterial[] materials) {
 
     private static final Random RAND = new Random(); // Random hold for phase lookups
 
-    public Material rand(final YABGIsland island) {
-        // TODO implement; update island block breaks as well as take account for possibility
-//        return materials[RAND.nextInt(materials.length)];
+    public boolean hasFinished(final Map<Material, Integer> blockBreaks) {
+        for (final WrappedMaterial material : materials) {
+            if (blockBreaks.getOrDefault(material.material(), 0) < material.amount()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean contains(final Material material) {
+        for (final WrappedMaterial wrappedMaterial : materials) {
+            if (wrappedMaterial.material().equals(material)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Material rand() {
+        int total = 0;
+        for (final WrappedMaterial material : materials) {
+            total += material.possibility();
+        }
+        int rand = RAND.nextInt(total);
+        for (final WrappedMaterial material : materials) {
+            rand -= material.possibility();
+            if (rand < 0) {
+                return material.material();
+            }
+        }
         return null;
     }
 
