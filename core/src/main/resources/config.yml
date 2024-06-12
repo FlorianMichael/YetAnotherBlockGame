@@ -63,9 +63,6 @@ phases:
     OAK_LEAVES:
       amount: 10
       possibility: 100
-    OAK_SAPLING:
-      amount: 10
-      possibility: 100
     DIRT:
       amount: 10
       possibility: 100
@@ -73,9 +70,6 @@ phases:
       amount: 10
       possibility: 100
     COBBLESTONE:
-      amount: 10
-      possibility: 100
-    TORCH:
       amount: 10
       possibility: 100
     CHEST:
@@ -94,16 +88,10 @@ phases:
     CACTUS:
       amount: 10
       possibility: 100
-    SUGAR_CANE:
-      amount: 10
-      possibility: 100
     ACACIA_LOG:
       amount: 10
       possibility: 100
     ACACIA_LEAVES:
-      amount: 10
-      possibility: 100
-    ACACIA_SAPLING:
       amount: 10
       possibility: 100
     ACACIA_PLANKS:
