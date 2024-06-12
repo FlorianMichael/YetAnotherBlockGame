@@ -62,8 +62,6 @@ public final class IslandCommand implements WrappedCommand {
                 island.setSpawnLocation(player.getLocation());
             }
         });
-        subCommands.put("delete", (player, args) -> {
-        });
         subCommands.put("visit", (player, args) -> {
         });
         subCommands.put("invite", (player, args) -> {

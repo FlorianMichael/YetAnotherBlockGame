@@ -39,17 +39,16 @@ public final class IslandTracker {
 
         int chunkX = 0;
         int chunkZ = 0;
-
-        int finalChunkX = chunkX;
-        int finalChunkY = chunkZ;
-        while (islands.stream().anyMatch(island -> island.chunkX() == finalChunkX && island.chunkY() == finalChunkY)) {
-            chunkX++;
-            if ((chunkX * config.islandSize) + config.islandSize >= maxWorldSize) {
-                chunkX = 0;
-                chunkZ++;
-            }
-            if ((chunkZ * config.islandSize) + config.islandSize >= maxWorldSize) {
-                throw new IllegalStateException(config.noSpaceForIslandsMessage);
+        for (YABGIsland island : islands) {
+            if (island.chunkX() == chunkX && island.chunkY() == chunkZ) {
+                chunkX++;
+                if ((chunkX * config.islandSize) + config.islandSize >= maxWorldSize) {
+                    chunkX = 0;
+                    chunkZ++;
+                }
+                if ((chunkZ * config.islandSize) + config.islandSize >= maxWorldSize) {
+                    throw new IllegalStateException(config.noSpaceForIslandsMessage);
+                }
             }
         }
 
