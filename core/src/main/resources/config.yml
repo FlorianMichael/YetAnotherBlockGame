@@ -72,9 +72,6 @@ phases:
     COBBLESTONE:
       amount: 10
       possibility: 100
-    CHEST:
-      amount: 10
-      possibility: 100
     OAK_PLANKS:
       amount: 10
       possibility: 100

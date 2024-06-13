@@ -21,6 +21,7 @@ import de.florianmichael.yabg.config.ConfigurationWrapper;
 import de.florianmichael.yabg.island.IslandTracker;
 import de.florianmichael.yabg.island.YABGIsland;
 import de.florianmichael.yabg.util.wrapper.WrappedCommand;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
@@ -95,7 +96,7 @@ public final class IslandCommand implements WrappedCommand {
             sender.sendMessage(config.invalidUsageMessage);
             sender.sendMessage("");
             for (String string : subCommands.keySet()) {
-                sender.sendMessage(prefixed("§c/island " + string));
+                sender.sendMessage(prefixed(ChatColor.RED + "/island " + string));
             }
             return;
         }
