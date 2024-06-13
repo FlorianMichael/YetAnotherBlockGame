@@ -61,6 +61,7 @@ public final class IslandCommand implements WrappedCommand {
             final YABGIsland island = getIsland(player);
             if (island != null) {
                 island.setSpawnLocation(player.getLocation());
+                player.sendMessage(config.spawnLocationSetMessage);
             }
         });
         subCommands.put("visit", (player, args) -> {
