@@ -26,7 +26,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import java.util.*;
 
 // TODO having a database for this would be a lot better, but shrug for now
-public class IslandsSave extends WrappedConfig {
+public final class IslandsSave extends WrappedConfig {
 
     private final IslandTracker tracker;
     private final ConfigurationWrapper config;

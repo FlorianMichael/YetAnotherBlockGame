@@ -9,7 +9,7 @@
 #
 # The prefix for all messages
 chat-format: "&7[&6YABG&7] "
-# The world used to generate the islands, if it doesn't exist we will create it
+# The world used to generate the islands, if it doesn't exist we will create it. DO NOT CHANGE AFTER FIRST START
 world-name: "yabg_world"
 # Required to execute /setspawn
 set-spawn-permission: "yabg.setspawn"
@@ -40,6 +40,8 @@ messages:
 #                      ISLAND OPTIONS                      #
 #----------------------------------------------------------#
 #
+# Note: these options shouldn't be changed after the first start, if you want to change them you
+#       have to delete the world and restart the server
 island:
   # The island size
   size: 100
