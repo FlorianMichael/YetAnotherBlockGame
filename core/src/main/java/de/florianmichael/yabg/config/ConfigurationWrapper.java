@@ -129,10 +129,10 @@ public final class ConfigurationWrapper extends WrappedConfig {
 
     public Phase nextPhase(final Phase phase) {
         if (phase == null) {
-            return phases.getFirst();
+            return phases.get(0);
         } else {
             final int index = phases.indexOf(phase);
-            return index == phases.size() - 1 ? phases.getFirst() : phases.get(index + 1);
+            return index == phases.size() - 1 ? phases.get(0) : phases.get(index + 1);
         }
     }
 

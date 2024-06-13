@@ -19,7 +19,6 @@ package de.florianmichael.yabg.listener;
 
 import de.florianmichael.yabg.BukkitPlugin;
 import de.florianmichael.yabg.island.YABGIsland;
-import io.papermc.paper.event.block.BlockPreDispenseEvent;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -50,7 +49,7 @@ public final class BlockBreakListener extends IslandListenerBase {
             return;
         }
 
-        final Item entity = (Item) world.spawnEntity(blockLocation.clone().add(0, 1, 0), EntityType.ITEM);
+        final Item entity = (Item) world.spawnEntity(blockLocation.clone().add(0, 1, 0), EntityType.DROPPED_ITEM);
         entity.setItemStack(new ItemStack(material, 1));
 
         island.blockBreaks().put(material, island.blockBreaks().getOrDefault(material, 0) + 1);
