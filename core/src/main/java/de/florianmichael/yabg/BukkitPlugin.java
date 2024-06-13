@@ -62,6 +62,7 @@ public final class BukkitPlugin extends JavaPlugin {
             getLogger().info("Creating OneBlock world...");
             world = CustomWorldFactory.createEmptyWorld(config.worldName);
         }
+        config.lateRead(getDataFolder());
 
         registerEvent(new PlayerJoinListener(config));
         registerEvent(new BlockBreakListener(this));

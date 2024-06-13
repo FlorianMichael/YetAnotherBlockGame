@@ -116,6 +116,10 @@ public final class ConfigurationWrapper extends WrappedConfig {
         // Internal save files
         final File folder = BukkitPlugin.instance().getDataFolder();
         this.positions.load(folder, "positions.yml");
+    }
+
+    // Needs YABG world to be loaded
+    public void lateRead(final File folder) {
         this.islands.load(folder, "islands.yml");
     }
 
