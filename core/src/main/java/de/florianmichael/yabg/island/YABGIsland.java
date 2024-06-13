@@ -53,12 +53,12 @@ public final class YABGIsland {
     public void initialize(final ConfigurationWrapper config) {
         final World world = BukkitPlugin.instance().world();
 
-        spawnLocation = getBlockLocation();
+        spawnLocation = getBlockLocation().add(0.5, 1, 0.5);
         world.setBlockData(middleX(config.islandSize), config.spawnY, middleZ(config.islandSize), config.islandBlock.createBlockData());
     }
 
     public void teleport(final Player player) {
-        player.teleport(spawnLocation.add(0.5, 1, 0.5));
+        player.teleport(spawnLocation);
     }
 
     public Location getBlockLocation() {
